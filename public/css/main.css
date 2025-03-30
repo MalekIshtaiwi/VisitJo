@@ -4,7 +4,7 @@
 /* Mobile Layout: 320px */
 /* Wide Mobile Layout: 480px */
 /* =================================== */
-/*  Basic Style 
+/*  Basic Style
 /* =================================== */
 ::-moz-selection {
   /* Code for Firefox */
@@ -2052,7 +2052,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .default-header {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 100% !important;
 }
 
@@ -2127,7 +2127,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .default-banner {
-  margin-top: -48px;
+  margin-top: -3.7rem;
 }
 
 @media (max-width: 991px) {

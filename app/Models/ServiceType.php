@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use app\Models\Service;
-class ServiceCategory extends Model
+
+class ServiceType extends Model
 {
     public function services (){
         return $this->hasMany(Service::class);

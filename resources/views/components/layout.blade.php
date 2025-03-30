@@ -7,23 +7,76 @@
 
 
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        <!--
-        CSS
-        ============================================= -->
-        <link rel="stylesheet" href="css/linearicons.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/animate.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <link rel="stylesheet" href="css/main.css">
+
+        <link rel="stylesheet" href="{{ asset('css/linearicons.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/owl.theme.default.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+        {{ $services_index_css ?? '' }}
+        {{ $landing_css ?? '' }}
+        {{ $services_home_styles ?? '' }}
+        {{ $services_show_css ?? '' }}
+        <style>
+            .profile-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid #8bc34a;
+                transition: all 0.3s;
+            }
+
+            .profile-toggle {
+                display: flex;
+                align-items: center;
+                background: none !important;
+            }
+
+            .profile-toggle::after {
+                display: none;
+            }
+
+            .profile-img:hover {
+                border-color: #689f38;
+                transform: scale(1.05);
+            }
+
+            .profile-dropdown {
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                border: none;
+                padding: 0;
+                min-width: 200px;
+                margin-top: 10px;
+            }
+
+            .profile-dropdown .dropdown-item {
+                padding: 12px 20px;
+            }
+
+            .profile-dropdown .dropdown-item:hover {
+                background-color: #f8f9fa;
+            }
+
+            .profile-dropdown .dropdown-item i {
+                margin-right: 10px;
+                color: #666;
+            }
+
+            .dropdown-divider {
+                margin: 0;
+            }
+        </style>
 </head>
 <body>
-
     <section class="banner-area" id="home">
         <!-- Start Header Area -->
         <header class="default-header">
-            <nav class="navbar navbar-expand-lg  navbar-light">
+            <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container">
                       <a class="navbar-brand" href="index.html">
                           <img src="img/logo.png" alt="">
@@ -34,20 +87,27 @@
 
                       <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#secvice">Service</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#faq">Faq</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <x-nav-link href="{{ route('/') }}">Home</x-nav-link>
+                            <x-nav-link href="{{ route('about') }}">About</x-nav-link>
+                            <x-nav-link href="{{ route('services-home') }}">Services</x-nav-link>
+                            <x-nav-link href="{{ route('contact') }}">Contact</x-nav-link>
+
+
+
                             <!-- Dropdown -->
-                            <li class="dropdown">
-                              <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                                Pages
+                            <!-- Profile Picture Dropdown -->
+                            <li class="dropdown ml-3">
+                              <a class="dropdown-toggle profile-toggle p-0" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="https://via.placeholder.com/150" alt="Profile" class="profile-img">
                               </a>
-                              <div class="dropdown-menu">
-                                <a class="dropdown-item" href="generic.html">Generic</a>
-                                <a class="dropdown-item" href="elements.html">Elements</a>
+                              <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="profileDropdown">
+                                <a class="dropdown-item" href="{{ route('profile') }}">
+                                  <i class="fa fa-user"></i> View Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="">
+                                  <i class="fa fa-sign-out-alt"></i> Logout
+                                </a>
                               </div>
                             </li>
                         </ul>
@@ -118,7 +178,8 @@
                 </div>
             </div>
         </footer>
-    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+    {{-- <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/jquery.ajaxchimp.min.js"></script>
@@ -128,6 +189,22 @@
     <script src="js/slick.js"></script>
     <script src="js/jquery.counterup.min.js"></script>
     <script src="js/waypoints.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js"></script> --}}
+    <script src="{{ asset('js/vendor/jquery-2.2.4.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/jquery.ajaxchimp.min.js') }}"></script>
+<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('js/jquery.sticky.js') }}"></script>
+<script src="{{ asset('js/slick.js') }}"></script>
+<script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
+<script src="{{ asset('js/waypoints.min.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://kit.fontawesome.com/131c85fc14.js" crossorigin="anonymous"></script>
+
+    {{ $services_index_script ?? '' }}
+    {{ $landing_script ?? '' }}
+
 </body>
 </html>
