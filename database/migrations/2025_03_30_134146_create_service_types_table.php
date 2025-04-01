@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('service_types', function (Blueprint $table) {
             $table->id();
-            $table->enum('name',['historical','therapy','adventure','religious']);
+            $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });

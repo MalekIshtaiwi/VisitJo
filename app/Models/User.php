@@ -6,9 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use app\Models\Booking;
-use app\Models\WishlistItem;
-use app\Models\Review;
+use App\Models\Booking;
+use App\Models\WishlistItem;
+use App\Models\Review;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

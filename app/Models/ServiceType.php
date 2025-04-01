@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use app\Models\Service;
+use App\Models\Service;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ServiceType extends Model
 {
+    use HasFactory;
     public function services (){
         return $this->hasMany(Service::class);
     }
