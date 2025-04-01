@@ -280,7 +280,6 @@
         </div>
     </section>
     {{-- services section --}}
-    <hr>
     <div class="container col-11 my-3">
         <div class="row">
             {{-- side filter --}}
@@ -391,105 +390,46 @@
             {{-- services cards --}}
             <div class="col-9">
                 <div class="row">
-                        <div class="trip-card mx-3">
-                            <div class="card-img-wrapper">
-                                <div class="trip-badge">Historical</div>
-                                <button class="favorite-btn">
+                    @foreach ($services as $service)
+                    <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
+                        <div class="trip-card h-100">
+                            <div class="card-img-wrapper position-relative">
+                                <div class="trip-badge">{{ $type->name }}</div>
+                                <button class="favorite-btn position-absolute" style="right: 10px; top: 10px; z-index: 2;">
                                     <i class="far fa-heart"></i>
                                 </button>
                                 <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                                     class="card-img-top" alt="Petra" />
                             </div>
-                            <div class="card-body p-4">
-                                <h5 class="card-title mb-3">Petra & Wadi Rum Adventure</h5>
+                            <div class="card-body p-4 d-flex flex-column">
+                                <h5 class="card-title mb-3 text-truncate">{{ $service->name }}</h5>
                                 <div class="trip-info mb-3">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <span class="text-primary font-weight-bold">$299</span>
+                                        <span class="text-primary font-weight-bold">{{ $service->price }}</span>
                                         <span class="text-muted">
-                                            <i class="fas fa-users"></i> 15 left
+                                            <i class="fas fa-users"></i> {{ $service->total_available_seats }} left
                                         </span>
                                     </div>
                                     <div class="d-flex flex-wrap">
-                                        <span class="badge badge-secondary mr-2">
+                                        <span class="badge badge-secondary mr-2 mb-1">
                                             <i class="fas fa-clock mr-1"></i>3 Days
                                         </span>
-                                        <span class="badge badge-secondary">
+                                        <span class="badge badge-secondary mb-1">
                                             <i class="fas fa-hotel mr-1"></i>4-Star
                                         </span>
                                     </div>
                                 </div>
-                                <p class="card-text text-muted mb-2">
+                                <p class="card-text text-muted mb-2 text-truncate">
                                     Explore
                                 </p>
-                                <button class="btn book-now-btn">Book Now</button>
+                                <form action="services/show{{ $service->id }}" method="GET">
+                                <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
+                            </form>
                             </div>
                         </div>
-                        <div class="trip-card mx-3">
-                            <div class="card-img-wrapper">
-                                <div class="trip-badge">Historical</div>
-                                <button class="favorite-btn">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                                    class="card-img-top" alt="Petra" />
-                            </div>
-                            <div class="card-body p-4">
-                                <h5 class="card-title mb-3">Petra & Wadi Rum Adventure</h5>
-                                <div class="trip-info mb-3">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span class="text-primary font-weight-bold">$299</span>
-                                        <span class="text-muted">
-                                            <i class="fas fa-users"></i> 15 left
-                                        </span>
-                                    </div>
-                                    <div class="d-flex flex-wrap">
-                                        <span class="badge badge-secondary mr-2">
-                                            <i class="fas fa-clock mr-1"></i>3 Days
-                                        </span>
-                                        <span class="badge badge-secondary">
-                                            <i class="fas fa-hotel mr-1"></i>4-Star
-                                        </span>
-                                    </div>
-                                </div>
-                                <p class="card-text text-muted mb-2">
-                                    Explore
-                                </p>
-                                <button class="btn book-now-btn">Book Now</button>
-                            </div>
-                        </div>
-                        <div class="trip-card mx-3">
-                            <div class="card-img-wrapper">
-                                <div class="trip-badge">Historical</div>
-                                <button class="favorite-btn">
-                                    <i class="far fa-heart"></i>
-                                </button>
-                                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                                    class="card-img-top" alt="Petra" />
-                            </div>
-                            <div class="card-body p-4">
-                                <h5 class="card-title mb-3">Petra & Wadi Rum Adventure</h5>
-                                <div class="trip-info mb-3">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span class="text-primary font-weight-bold">$299</span>
-                                        <span class="text-muted">
-                                            <i class="fas fa-users"></i> 15 left
-                                        </span>
-                                    </div>
-                                    <div class="d-flex flex-wrap">
-                                        <span class="badge badge-secondary mr-2">
-                                            <i class="fas fa-clock mr-1"></i>3 Days
-                                        </span>
-                                        <span class="badge badge-secondary">
-                                            <i class="fas fa-hotel mr-1"></i>4-Star
-                                        </span>
-                                    </div>
-                                </div>
-                                <p class="card-text text-muted mb-2">
-                                    Explore
-                                </p>
-                                <button class="btn book-now-btn">Book Now</button>
-                            </div>
-                        </div>
+                    </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>

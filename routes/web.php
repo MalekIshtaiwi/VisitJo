@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 //Landing Page Route
@@ -17,9 +18,9 @@ Route::get("/about", function () {
 
 
 //Services routes
-Route::get("/services-home", function () {
-    return view("public.services.services-home");
-})->name('services-home');
+Route::get("/services-home",[ServiceController::class,'index'])->name('services-home');
+Route::get("/index{id}",[ServiceController::class,'showType']);
+Route::get("services/show{service}",[ServiceController::class,'show']);
 
 Route::get("/services", function () {
     return view("public.services.index");

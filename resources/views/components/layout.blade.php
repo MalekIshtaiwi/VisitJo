@@ -201,7 +201,8 @@
 <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
 <script src="{{ asset('js/waypoints.min.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
-    <script src="https://kit.fontawesome.com/131c85fc14.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/131c85fc14.js" crossorigin="anonymous"></script>
+
 
     {{ $services_index_script ?? '' }}
     {{ $landing_script ?? '' }}
