@@ -9,6 +9,8 @@ use App\Models\Service;
 use App\Models\Review;
 class ServiceController extends Controller
 {
+
+
     public function index()
     {
         // Get all categories

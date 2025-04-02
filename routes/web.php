@@ -2,6 +2,9 @@
 
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +40,17 @@ Route::get("/contact", function () {
 })->name('contact');
 
 
-//Profile Routes
-Route::get("/profile", function () {
-    return view("public.profile");
-})->name('profile');
+//Auth
+Route::get('/register',[RegisterController::class,'create'])->name('register');
 
-Route::resource('admin',AdminController::class);
+Route::post('/register',[RegisterController::class,'store'])->name('registerBtn');
+
+Route::get('/login',[LoginController::class,'create'])->name('login');
+
+Route::post('/login',[LoginController::class,'store'])->name('loginBtn');
+
+Route::post('/logout',[LoginController::class,'destroy'])->name('logout');
+
+//Profile
+
+Route::resource('profile',ProfileController::class)->middleware('auth');

@@ -20,6 +20,10 @@
         {{ $landing_css ?? '' }}
         {{ $services_home_styles ?? '' }}
         {{ $services_show_css ?? '' }}
+        {{ $view_profile_css ?? ''}}
+        {{ $Register_css ?? ''}}
+
+
         <style>
             .profile-img {
                 width: 40px;
@@ -96,20 +100,40 @@
 
                             <!-- Dropdown -->
                             <!-- Profile Picture Dropdown -->
+                            @guest
                             <li class="dropdown ml-3">
-                              <a class="dropdown-toggle profile-toggle p-0" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="https://via.placeholder.com/150" alt="Profile" class="profile-img">
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item" href="{{ route('profile') }}">
-                                  <i class="fa fa-user"></i> View Profile
+                                <a class="dropdown-toggle profile-toggle p-0" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <img src="https://images.vexels.com/media/users/3/140748/isolated/svg/5b078a59390bb4666df98b49f1cdedd0.svg" alt="Profile" class="profile-img">
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">
-                                  <i class="fa fa-sign-out-alt"></i> Logout
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="profileDropdown">
+                                  <a class="dropdown-item" href="{{ route('register') }}">
+                                     Register
+                                  </a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="{{ route('login') }}">
+                                     Login
+                                  </a>
+                                </div>
+                              </li>
+                            @endguest
+
+                            @auth
+                            <li class="dropdown ml-3">
+                                <a class="dropdown-toggle profile-toggle p-0" href="#" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <img src="https://images.vexels.com/media/users/3/140748/isolated/svg/5b078a59390bb4666df98b49f1cdedd0.svg" alt="Profile" class="profile-img">
                                 </a>
-                              </div>
-                            </li>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown" aria-labelledby="profileDropdown">
+                                  <a class="dropdown-item" href="{{ route('profile.index') }}">
+                                    <i class="fa fa-user"></i> View Profile
+                                  </a>
+                                  <div class="dropdown-divider"></div>
+                                  <form action="/logout" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Logout</button>
+                                  </form>
+                                </div>
+                              </li>
+                            @endauth
                         </ul>
                       </div>
                 </div>
@@ -178,7 +202,6 @@
                 </div>
             </div>
         </footer>
-
     {{-- <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
@@ -206,6 +229,7 @@
 
     {{ $services_index_script ?? '' }}
     {{ $landing_script ?? '' }}
+    {{ $Register_script ?? ''}}
 
 </body>
 </html>
