@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Define composite primary key
-            $table->primary(['user_id', 'service_id']);
+            $table->unique(['user_id', 'service_id']);
         });
     }
 

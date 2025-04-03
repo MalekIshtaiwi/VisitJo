@@ -94,7 +94,7 @@
                                     <p class="card-text text-muted mb-2">
                                         Explore
                                     </p>
-                                    <button class="btn book-now-btn">Book Now</button>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                         Relax in mineral-rich waters and luxury spa treatments at
                                         the lowest point on Earth.
                                     </p>
-                                    <button class="btn book-now-btn">Book Now</button>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                                         Relax in mineral-rich waters and luxury spa treatments at
                                         the lowest point on Earth.
                                     </p>
-                                    <button class="btn book-now-btn">Book Now</button>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                                         Relax in mineral-rich waters and luxury spa treatments at
                                         the lowest point on Earth.
                                     </p>
-                                    <button class="btn book-now-btn">Book Now</button>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +256,7 @@
                                         Relax in mineral-rich waters and luxury spa treatments at
                                         the lowest point on Earth.
                                     </p>
-                                    <button class="btn book-now-btn">Book Now</button>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                 </div>
                             </div>
                         </div>
@@ -618,10 +618,6 @@
         });
 
         // Favorite button functionality
-        $(".favorite-btn").click(function() {
-            $(this).toggleClass("active");
-            $(this).find("i").toggleClass("far fas");
-        });
     });
 </script>
 </x-slot name="landing_script">

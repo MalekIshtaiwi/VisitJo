@@ -1,6 +1,4 @@
 <x-layout>
-
-
     <x-slot name="services_index_css">
         <style>
             :root {
@@ -12,7 +10,13 @@
                 --dark: #2d2424;
                 --white: #ffffff;
             }
+            .fas.fa-heart {
+    color: red;
+}
 
+.far.fa-heart {
+    color: var(--white);
+}
             .trip-card {
                 border: none;
                 border-radius: 16px;
@@ -259,8 +263,10 @@
             .separator {
                 margin: 0 5px;
             }
+
+
         </style>
-    </x-slot name="services_index_css">
+    </x-slot>
     {{-- hero section --}}
     <section class="default-banner">
         <div class="item-slider relative" style="width: 100%; background: url(/images/hero1.jpg);background-size: cover;">
@@ -391,13 +397,24 @@
             <div class="col-9">
                 <div class="row">
                     @foreach ($services as $service)
+
                     <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
+                        <a href="/services/show{{ $service->id }}">
                         <div class="trip-card h-100">
                             <div class="card-img-wrapper position-relative">
                                 <div class="trip-badge">{{ $type->name }}</div>
-                                <button class="favorite-btn position-absolute" style="right: 10px; top: 10px; z-index: 2;">
-                                    <i class="far fa-heart"></i>
-                                </button>
+                                <form action="{{ route('wishlist.add') }}" method="POST" class="favorite-form">
+                                    @csrf
+                                    <input type="hidden" name="service_id" value="{{ $service->id }}">
+                                    <button type="submit" class="favorite-btn">
+                                        @php
+                                            $inWishlist = App\Models\WishlistItem::where('user_id', Auth::id())
+                                                ->where('service_id', $service->id)
+                                                ->exists();
+                                        @endphp
+                                        <i class="{{ $inWishlist ? 'fas' : 'far' }} fa-heart"></i>
+                                    </button>
+                                </form>
                                 <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
                                     class="card-img-top" alt="Petra" />
                             </div>
@@ -422,12 +439,12 @@
                                 <p class="card-text text-muted mb-2 text-truncate">
                                     Explore
                                 </p>
-                                <form action="services/show{{ $service->id }}" method="GET">
-                                <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
-                            </form>
+                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                             </div>
                         </div>
+                    </a>
                     </div>
+
                     @endforeach
 
                 </div>
@@ -435,15 +452,5 @@
         </div>
     </div>
 
-    <x-slot name="services_index_script">
-        <script>
-            $(document).ready(function() {
-                // Favorite button functionality
-                $(".favorite-btn").click(function() {
-                    $(this).toggleClass("active");
-                    $(this).find("i").toggleClass("far fas");
-                });
-            });
-        </script>
-    </x-slot name="services_index_script">
+
 </x-layout>

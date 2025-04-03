@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\ServiceCategory;
 use App\Models\ServiceType;
@@ -27,18 +28,63 @@ class ServiceController extends Controller
         return view('public.services.services-home', compact('categories'));
     }
 
-    public function showType($id){
+    public function showType($id)
+    {
         $type = ServiceType::findOrFail($id);
         $services = Service::where('service_type_id', $id)->get();
-        return view('public.services.index',[
+        return view('public.services.index', [
             'services' => $services,
             'type' => $type,
         ]);
     }
 
-    public function show(Service $service){
-        return view('public.services.show',[
-            'service'  => $service,
+    public function show(Service $service)
+    {
+        return view('public.services.show', [
+            'service' => $service,
         ]);
     }
+
+        public function store(Request $request)
+        {
+            // Validate the request
+            $request->validate([
+                'service_id' => 'required|exists:services,id',
+                'quantity' => 'required|integer|min:1',
+                'price_at_booking' => 'required|numeric'
+            ]);
+
+            // Get the authenticated user's ID
+            $userId = Auth::id();
+
+            // Check if user is authenticated
+            if (!$userId) {
+                return redirect()->route('login')->with('error', 'Please login to book a service');
+            }
+
+            // Get the service
+            $service = Service::findOrFail($request->service_id);
+
+            // Check if enough seats are available
+            if ($service->total_available_seats < $request->quantity) {
+                return back()->with('error', 'Not enough seats available');
+            }
+
+            // Create the booking
+            $booking = new Booking();
+            $booking->user_id = $userId;
+            $booking->service_id = $request->service_id;
+            $booking->quantity = $request->quantity;
+            $booking->price_at_booking = $request->price_at_booking;
+            $booking->status = 'pending';
+            $booking->payment_status = 'pending';
+            $booking->save();
+
+            // Update available seats
+            $service->total_available_seats -= $request->quantity;
+            $service->save();
+
+            return redirect('/');
+        }
+
 }
