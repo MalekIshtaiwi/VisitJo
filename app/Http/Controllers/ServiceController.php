@@ -28,10 +28,10 @@ class ServiceController extends Controller
         return view('public.services.services-home', compact('categories'));
     }
 
-    public function showType($id)
+    public function showType($id,$category_id)
     {
         $type = ServiceType::findOrFail($id);
-        $services = Service::where('service_type_id', $id)->get();
+        $services = Service::where('service_type_id', $id)->where('service_category_id',$category_id)->get();
         return view('public.services.index', [
             'services' => $services,
             'type' => $type,

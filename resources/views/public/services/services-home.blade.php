@@ -61,7 +61,13 @@
                                 <div class="card-content">
                                     <h3 class="card-title">{{ $type->name }}</h3>
                                     <p class="card-description">{{ $type->description }}</p>
-                                    <a href="/index{{ $type->id }}" class="btn card-button text-white">Explore Now</a>
+                                    <form action="{{ route('services', [$type->id,$category->id]) }}" method="GET">
+                                        @csrf
+                                        <button type="submit" class="btn card-button text-white">
+                                            Explore Now
+                                        </button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
@@ -87,7 +93,13 @@
                                 <p class="feature-description">{{ $type->description }}</p>
                             </div>
                         </div>
-                        <a href="/index{{ $type->id }}" class="btn action-button">Find Places</a>
+                        <form action="{{ route('services', [$type->id,$category->id]) }}" method="GET">
+                            @csrf
+                            <button type="submit" class="btn action-button">
+                                Explore Now
+                            </button>
+                        </form>
+
                     </div>
                 </div>
                 @endforeach

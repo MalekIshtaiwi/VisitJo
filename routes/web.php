@@ -24,12 +24,9 @@ Route::get("/about", function () {
 
 //Services routes
 Route::get("/services-home",[ServiceController::class,'index'])->name('services-home');
-Route::get("/index{id}",[ServiceController::class,'showType']);
+Route::get("/index{id}{category_id}",[ServiceController::class,'showType'])->name('services');
 Route::get("/services/show{service}",[ServiceController::class,'show']);
 
-Route::get("/services", function () {
-    return view("public.services.index");
-})->name('services');
 
 Route::get("/service", function () {
     return view(view: "public.services.show");
