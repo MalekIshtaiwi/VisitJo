@@ -22,7 +22,7 @@ class ServiceController extends Controller
             // Get all unique service types linked to this category through services
             $category->types = ServiceType::whereHas('services', function ($query) use ($category) {
                 $query->where('service_category_id', $category->id);
-            })->get();
+            })->paginate(9);
         }
 
         return view('public.services.services-home', compact('categories'));
@@ -87,4 +87,50 @@ class ServiceController extends Controller
             return redirect('/');
         }
 
+        public function search(Request $request)
+        {
+            // Get the currently active service type (if any)
+            $type = null;
+            if ($request->has('type_id')) {
+                $type = ServiceType::findOrFail($request->type_id);
+            } else {
+                // Use the first service type as default if none specified
+                $type = ServiceType::first();
+            }
+
+            // Start with a base service selection
+            $servicesBuilder = Service::select('*');
+
+            // Apply service type filter if it exists
+            if ($type) {
+                $servicesBuilder->where('service_type_id', $type->id);
+            }
+
+            // Apply location filter if provided
+            if ($request->filled('location')) {
+                $servicesBuilder->where('location', 'LIKE', '%' . $request->location . '%');
+            }
+
+            // Apply date range filter
+            if ($request->filled('date_from') || $request->filled('date_to')) {
+                // Default values if only one date is provided
+                $dateFrom = $request->filled('date_from') ? $request->date_from : '1900-01-01';
+                $dateTo = $request->filled('date_to') ? $request->date_to : '2099-12-31';
+
+                // Find services where the service period overlaps with the requested period
+                // For overlap to occur: service_start <= requested_end AND service_end >= requested_start
+                $servicesBuilder->where(function($builder) use ($dateFrom, $dateTo) {
+                    $builder->whereNotNull('start_datetime')
+                            ->whereNotNull('end_datetime')
+                            ->whereDate('start_datetime', '<=', $dateTo)  // Service starts before or on the requested end date
+                            ->whereDate('end_datetime', '>=', $dateFrom); // Service ends after or on the requested start date
+                });
+            }
+
+            // Get paginated results
+            $services = $servicesBuilder->paginate(9);
+
+            // Return view with services and type
+            return view('public.services.index', compact('services', 'type'));
+        }
 }

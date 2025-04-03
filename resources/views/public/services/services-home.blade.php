@@ -108,10 +108,6 @@
             </div>
         </div>
         @endif
-        <!-- Tours Section -->
-
-
-        <!--Events Section -->
 
     @endforeach
     <!-- Bootstrap 4 JS and dependencies -->

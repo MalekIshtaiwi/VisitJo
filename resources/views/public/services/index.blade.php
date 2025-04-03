@@ -11,12 +11,12 @@
                 --white: #ffffff;
             }
             .fas.fa-heart {
-    color: red;
-}
+                color: red;
+            }
 
-.far.fa-heart {
-    color: var(--white);
-}
+            .far.fa-heart {
+                color: var(--white);
+            }
             .trip-card {
                 border: none;
                 border-radius: 16px;
@@ -263,8 +263,6 @@
             .separator {
                 margin: 0 5px;
             }
-
-
         </style>
     </x-slot>
     {{-- hero section --}}
@@ -280,7 +278,6 @@
                             or incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -292,165 +289,99 @@
             <div class="col-3">
                 <div class="filter-panel shadow-sm">
                     <h5 class="filter-title">FIND CITY</h5>
-                    <form>
-                        <input type="text" class="form-control" placeholder="Destination, City">
-
-                        <select class="form-control custom-select">
-                            <option selected>Select Location</option>
-                            <option>New York</option>
-                            <option>London</option>
-                            <option>Paris</option>
-                            <option>Tokyo</option>
-                            <option>Sydney</option>
-                        </select>
-
-                        <input type="text" class="form-control" placeholder="Date from">
-                        <input type="text" class="form-control" placeholder="Date to">
-
-                        <div class="price-range-slider">
-                            <div class="price-range-label">
-                                <span id="min-price">25000</span>
-                                <span class="separator">-</span>
-                                <span id="max-price">50000</span>
-                            </div>
-                            <input type="range" min="1000" max="100000" value="25000" class="range-slider"
-                                id="price-min">
-                            <input type="range" min="1000" max="100000" value="50000" class="range-slider mt-3"
-                                id="price-max">
-                        </div>
+                    <form action="{{ route('search') }}" method="GET">
+                        @if(isset($type))
+                            <input type="hidden" name="type_id" value="{{ $type->id }}">
+                        @endif
+                        <input type="text" name="location" class="form-control" placeholder="location" value="{{ request('location') }}">
+                        <input type="date" name="date_from" class="form-control" placeholder="Date from" value="{{ request('date_from') }}">
+                        <input type="date" name="date_to" class="form-control" placeholder="Date to" value="{{ request('date_to') }}">
 
                         <button type="submit" class="btn search-btn">Search</button>
                     </form>
-                </div>
-
-                <!-- Star Rating Filter -->
-                <div class="filter-panel shadow-sm">
-                    <h5 class="filter-title">STAR RATING</h5>
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox" class="custom-control-input" id="star5">
-                        <label class="custom-control-label" for="star5">
-                            <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox" class="custom-control-input" id="star4">
-                        <label class="custom-control-label" for="star4">
-                            <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star star-empty"></i>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox" class="custom-control-input" id="star3">
-                        <label class="custom-control-label" for="star3">
-                            <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="custom-control custom-checkbox mb-2">
-                        <input type="checkbox" class="custom-control-input" id="star2">
-                        <label class="custom-control-label" for="star2">
-                            <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                            </div>
-                        </label>
-                    </div>
-
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="star1">
-                        <label class="custom-control-label" for="star1">
-                            <div class="star-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                                <i class="fas fa-star star-empty"></i>
-                            </div>
-                        </label>
-                    </div>
                 </div>
             </div>
 
             {{-- services cards --}}
             <div class="col-9">
                 <div class="row">
-                    @foreach ($services as $service)
-
-                    <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
-                        <a href="/services/show{{ $service->id }}">
-                        <div class="trip-card h-100">
-                            <div class="card-img-wrapper position-relative">
-                                <div class="trip-badge">{{ $type->name }}</div>
-                                <form action="{{ route('wishlist.add') }}" method="POST" class="favorite-form">
-                                    @csrf
-                                    <input type="hidden" name="service_id" value="{{ $service->id }}">
-                                    <button type="submit" class="favorite-btn">
-                                        @php
-                                            $inWishlist = App\Models\WishlistItem::where('user_id', Auth::id())
-                                                ->where('service_id', $service->id)
-                                                ->exists();
-                                        @endphp
-                                        <i class="{{ $inWishlist ? 'fas' : 'far' }} fa-heart"></i>
-                                    </button>
-                                </form>
-                                <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                                    class="card-img-top" alt="Petra" />
-                            </div>
-                            <div class="card-body p-4 d-flex flex-column">
-                                <h5 class="card-title mb-3 text-truncate">{{ $service->name }}</h5>
-                                <div class="trip-info mb-3">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span class="text-primary font-weight-bold">{{ $service->price }}</span>
-                                        <span class="text-muted">
-                                            <i class="fas fa-users"></i> {{ $service->total_available_seats }} left
-                                        </span>
+                    @if($services->count() > 0)
+                        @foreach ($services as $service)
+                        <div class="col-sm-6 col-md-4 col-lg-4 mb-4">
+                            <a href="/services/show{{ $service->id }}">
+                                <div class="trip-card h-100">
+                                    <div class="card-img-wrapper position-relative">
+                                        <div class="trip-badge">{{ $type->name }}</div>
+                                        <form action="{{ route('wishlist.add') }}" method="POST" class="favorite-form">
+                                            @csrf
+                                            <input type="hidden" name="service_id" value="{{ $service->id }}">
+                                            <button type="submit" class="favorite-btn">
+                                                @php
+                                                    $inWishlist = Auth::check() ? App\Models\WishlistItem::where('user_id', Auth::id())
+                                                        ->where('service_id', $service->id)
+                                                        ->exists() : false;
+                                                @endphp
+                                                <i class="{{ $inWishlist ? 'fas' : 'far' }} fa-heart"></i>
+                                            </button>
+                                        </form>
+                                        <img src="{{ $service->image_path ?? 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' }}"
+                                            class="card-img-top" alt="{{ $service->name }}" />
                                     </div>
-                                    <div class="d-flex flex-wrap">
-                                        <span class="badge badge-secondary mr-2 mb-1">
-                                            <i class="fas fa-clock mr-1"></i>3 Days
-                                        </span>
-                                        <span class="badge badge-secondary mb-1">
-                                            <i class="fas fa-hotel mr-1"></i>4-Star
-                                        </span>
+                                    <div class="card-body p-4 d-flex flex-column">
+                                        <h5 class="card-title mb-3 text-truncate">{{ $service->name }}</h5>
+                                        <div class="trip-info mb-3">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span class="text-primary font-weight-bold">{{ $service->price ? '$' . number_format($service->price, 2) : 'Free' }}</span>
+                                                <span class="text-muted">
+                                                    <i class="fas fa-users"></i> {{ $service->total_available_seats }} left
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-wrap">
+                                                @if($service->start_datetime && $service->end_datetime)
+                                                    @php
+                                                        $start = new DateTime($service->start_datetime);
+                                                        $end = new DateTime($service->end_datetime);
+                                                        $days = $end->diff($start)->days + 1;
+                                                    @endphp
+                                                    <span class="badge badge-secondary mr-2 mb-1">
+                                                        <i class="fas fa-clock mr-1"></i>{{ $days }} {{ $days === 1 ? 'Day' : 'Days' }}
+                                                    </span>
+                                                @else
+                                                    <span class="badge badge-secondary mr-2 mb-1">
+                                                        <i class="fas fa-clock mr-1"></i>3 Days
+                                                    </span>
+                                                @endif
+                                                <span class="badge badge-secondary mb-1">
+                                                    <i class="fas fa-map-marker-alt mr-1"></i>{{ $service->location ?? 'Location not specified' }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <p class="card-text text-muted mb-2 text-truncate">
+                                            {{ Str::limit($service->description, 50, '...') }}
+                                        </p>
+                                        <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
                                     </div>
                                 </div>
-                                <p class="card-text text-muted mb-2 text-truncate">
-                                    Explore
-                                </p>
-                                    <button class="btn book-now-btn mt-auto" type="submit">Book Now</button>
+                            </a>
+                        </div>
+                        @endforeach
+                    @else
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>No services found</h4>
+                                <p>Try adjusting your search criteria or check back later for new services.</p>
                             </div>
                         </div>
-                    </a>
-                    </div>
-
-                    @endforeach
-
+                    @endif
                 </div>
+
+                <!-- Pagination -->
+                @if(method_exists($services, 'links'))
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $services->appends(request()->query())->links() }}
+                </div>
+                @endif
             </div>
         </div>
     </div>
-
-
 </x-layout>
