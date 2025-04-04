@@ -1,7 +1,16 @@
 <?php
-
-
+//admin imports
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminServiceController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServiceCategoryController;
+use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\AdminBookingController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LandingController;
+
+//public imports
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\BookingController;
@@ -68,3 +77,39 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 });
+
+
+
+// admin routes
+Route::resource('admin',AdminController::class);
+Route::resource('customers',CustomerController::class);
+
+Route::resource('/services', AdminServiceController::class);
+
+
+Route::resource('/categories', ServiceCategoryController::class);
+Route::resource('users', UserController::class);
+
+
+
+
+Route::get('/dashboard', function () {
+    return view("admin.dashboard");
+})->name('dashboard.index');
+
+
+Route::get('/test', function () {
+    dd('Route works!');
+});
+
+
+
+
+Route::get('/admin-reviews', [AdminReviewController::class, 'index'])->name('admin.reviews.index');
+Route::post('/admin-reviews/{review}/approve', [AdminReviewController::class, 'approve'])->name('admin.reviews.approve');
+Route::post('/admin-reviews/{review}/reject', [AdminReviewController::class, 'reject'])->name('admin.reviews.reject');
+
+
+Route::get('/admin-bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+Route::post('/admin-bookings/{booking}/approve', [AdminBookingController::class, 'approve'])->name('admin.bookings.approve');
+Route::post('/admin-bookings/{booking}/reject', [AdminBookingController::class, 'reject'])->name('admin.bookings.reject');

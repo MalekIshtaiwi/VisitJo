@@ -24,13 +24,26 @@ class Service extends Model
         return $this->hasMany(WishlistItem::class, 'service_id', 'id');
     }
 
-    public function category()
-    {
-        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
-    }
+//     public function category()
+//     {
+//         //carefull when importing from layan check this one and test both
+//         return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+//     }
 
-    public function type()
-    {
-        return $this->belongsTo(ServiceType::class, 'service_type_id');
-    }
+//     public function type()
+//     {
+
+//         return $this->belongsTo(ServiceType::class, 'service_type_id');
+//     }
+
+public function serviceCategory()
+{
+    return $this->belongsTo(ServiceCategory::class);
+}
+
+// Define the relationship with the ServiceType model
+public function serviceType()
+{
+    return $this->belongsTo(ServiceType::class);
+}
 }

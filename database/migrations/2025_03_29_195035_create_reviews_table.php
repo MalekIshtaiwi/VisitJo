@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
             $table->tinyInteger('rating')->comment('e.g., 1-5');
             $table->text('comment')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected', 'cancelled'])->default('pending');
             $table->timestamps();
 
             $table->unique(['user_id', 'service_id'], 'reviews_user_service_unique');
