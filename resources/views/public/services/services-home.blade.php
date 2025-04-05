@@ -2,17 +2,19 @@
     <x-slot name="services_home_styles">
         <link rel="stylesheet" href="css/services.css">
         <style>
+
             .hero-section {
                 position: relative;
-                height: 500px;
                 background-image: url('images/services_land_picture.jpg');
                 background-size: cover;
                 background-position: center;
                 color: white;
                 display: flex;
                 align-items: center;
-
+                height: 100vh;
             }
+
+
 
             .hero-section::before {
                 content: "";
@@ -27,8 +29,8 @@
     </x-slot name="services_home_styles">
 
     <!-- Landing Section -->
-    <div class="hero-section" style="height: 700px;">
-        <div class="container hero-content">
+    <div class="hero-section">
+        <div class="container-fluid hero-content">
             <div class="row">
                 <div class="col-md-8">
                     <h1 class="hero-title">Discover Jordan's<br>Timeless Wonders</h1>
@@ -61,7 +63,7 @@
                                 <div class="card-content">
                                     <h3 class="card-title">{{ $type->name }}</h3>
                                     <p class="card-description">{{ $type->description }}</p>
-                                    <form action="{{ route('services', [$type->id,$category->id]) }}" method="GET">
+                                    <form action="{{ route('services', [$type->id, $category->id]) }}" method="GET">
                                         @csrf
                                         <button type="submit" class="btn card-button text-white">
                                             Explore Now
@@ -75,40 +77,39 @@
                 </div>
             </div>
         @else
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">{{ $category->name }}s</h2>
-            </div>
-            <div class="row">
-                <!-- Card 1: Accommodation Options -->
-                @foreach ($category->types as $type )
-                <div class="col-md-6 col-lg-6">
-                    <div class="feature-card">
-                        <div class="feature-header">
-                            <div class="feature-icon">
-                                <i class="fas fa-hotel"></i>
-                            </div>
-                            <div>
-                                <h3 class="feature-title">{{ $type->name }}</h3>
-                                <p class="feature-description">{{ $type->description }}</p>
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{{ $category->name }}s</h2>
+                </div>
+                <div class="row">
+                    <!-- Card 1: Accommodation Options -->
+                    @foreach ($category->types as $type)
+                        <div class="col-md-6 col-lg-6">
+                            <div class="feature-card">
+                                <div class="feature-header">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-hotel"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="feature-title">{{ $type->name }}</h3>
+                                        <p class="feature-description">{{ $type->description }}</p>
+                                    </div>
+                                </div>
+                                <form action="{{ route('services', [$type->id, $category->id]) }}" method="GET">
+                                    @csrf
+                                    <button type="submit" class="btn action-button">
+                                        Explore Now
+                                    </button>
+                                </form>
+
                             </div>
                         </div>
-                        <form action="{{ route('services', [$type->id,$category->id]) }}" method="GET">
-                            @csrf
-                            <button type="submit" class="btn action-button">
-                                Explore Now
-                            </button>
-                        </form>
+                    @endforeach
 
-                    </div>
+
                 </div>
-                @endforeach
-
-
             </div>
-        </div>
         @endif
-
     @endforeach
     <!-- Bootstrap 4 JS and dependencies -->
 

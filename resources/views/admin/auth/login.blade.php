@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         :root {
@@ -167,71 +165,86 @@
         .input-group .form-control {
             border-right: none;
         }
+
+        /* Make error message visible */
+        .invalid-feedback {
+            display: block;
+            color: #dc3545;
+            margin-top: 0.25rem;
+        }
+
+        /* Add border for invalid inputs */
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            padding-right: calc(1.5em + 0.75rem);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+        }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <section class="register-section">
             <div class="card">
-
                 <div class="card-header">
-                    <h2>Create Account</h2>
-                    <p>Join us and start your journey</p>
+                    <h2>Login</h2>
+                    <p>Welcome back</p>
                 </div>
                 <div class="card-body">
-                    <form action="/register" method="POST">
+                    <form method="POST" action="{{ route('admin.login') }}">
                         @csrf
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <div class="input-group">
-                                <input name="name" type="text" :value="old('name')" class="form-control"
-                                    id="name">
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <label for="email">Email Address</label>
                             <div class="input-group">
-                                <input name="email" type="email" :value="old('email')" class="form-control"
-                                    id="email">
+                                <input name="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror" id="email"
+                                    value="{{ old('email') }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="far fa-envelope"></i>
                                     </span>
                                 </div>
                             </div>
+                            @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="password">Password</label>
                             <div class="input-group">
-                                <input name="password" type="password" :value="old('password')" class="form-control"
-                                    id="password">
+                                <input name="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" id="password">
                                 <div class="input-group-append">
                                     <span class="input-group-text">
                                         <i class="far fa-eye"></i>
                                     </span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password_confirmation">Confirm Password</label>
-                            <div class="input-group">
-                                <input name="password_confirmation" type="password"
-                                    :value="old('password_confirmation')" class="form-control"
-                                    id="password_confirmation">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="far fa-eye"></i>
-                                    </span>
+                            @error('password')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">
+                                    Remember me
+                                </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
 
                         <div class="or-divider">Or continue with</div>
@@ -255,14 +268,13 @@
                         </div>
 
                         <div class="login-link">
-                            Already have an account? <a href="/login">Sign in</a>
+                            Don't have an account? <a href="/register">Register</a>
                         </div>
                     </form>
                 </div>
             </div>
         </section>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -281,8 +293,6 @@
             }
         });
     </script>
-
-
 </body>
 
 </html>

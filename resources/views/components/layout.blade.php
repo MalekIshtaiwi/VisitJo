@@ -103,8 +103,7 @@
         </header>
         <!-- End Header Area -->
     </section>
-
-    <!-- Cart Button -->
+    @auth
     <div class="cart-button-container">
         <form action="{{ route('bookings.index') }}">
         <button type="submit" id="cartButton" class="cart-button">
@@ -121,6 +120,9 @@
         </button>
     </form>
     </div>
+
+    @endauth
+    <!-- Cart Button -->
 
 
 

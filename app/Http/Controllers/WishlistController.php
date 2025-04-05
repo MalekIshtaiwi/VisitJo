@@ -16,6 +16,9 @@ class WishlistController extends Controller
         // Get the authenticated user's ID
         $userId = Auth::id();
 
+        if (!$userId) {
+            return redirect()->route('login')->with('error', 'Please login to book a service');
+        }
         // Retrieve wishlist items with their associated services
         $wishlistItems = WishlistItem::where('user_id', $userId)
             ->with('service')

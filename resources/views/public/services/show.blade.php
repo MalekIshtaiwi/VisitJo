@@ -189,7 +189,7 @@
                     </div>
 
 
-                        <img src="https://picsum.photos/400/320" alt="Luxury resort" class="main-image">
+                        <img src="{{ asset('storage/' . $service->image_path) }}" alt="Luxury resort" class="main-image">
 
 
                     <div class="thumbnail-container">

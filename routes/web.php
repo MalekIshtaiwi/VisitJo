@@ -1,6 +1,7 @@
 <?php
 //admin imports
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminServiceController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServiceCategoryController;
@@ -81,16 +82,18 @@ Route::middleware(['auth'])->group(function () {
 
 
 // admin routes
-Route::resource('admin',AdminController::class);
-Route::resource('customers',CustomerController::class);
+Route::resource('admin',AdminController::class)->middleware('auth:admin');
+Route::resource('customers',CustomerController::class)->middleware('auth:admin');
 
-Route::resource('/services', AdminServiceController::class);
-
-
-Route::resource('/categories', ServiceCategoryController::class);
-Route::resource('users', UserController::class);
+Route::resource('/services', AdminServiceController::class)->middleware('auth:admin');
 
 
+Route::resource('/categories', ServiceCategoryController::class)->middleware('auth:admin');
+Route::resource('users', UserController::class)->middleware('auth:admin');
+
+Route::get('/admin-login',[AdminLoginController::class,'index'])->name('admin-login.index');
+Route::post('/admin-login',[AdminLoginController::class,'store'])->name('admin.login');
+Route::post('/admin-logout',[AdminLoginController::class,'destroy'])->name('admin.logout');
 
 
 Route::get('/dashboard', function () {
