@@ -7,9 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Review;
 use App\Models\Booking;
 use App\Models\WishlistItem;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Service extends Model
 {
+    use HasFactory;
+    protected $casts = [
+        'price' => 'decimal:2',
+        'start_datetime' => 'datetime',
+        'end_datetime' => 'datetime',
+    ];
+
     use HasFactory;
     public function reviews()
     {

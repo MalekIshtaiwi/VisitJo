@@ -20,11 +20,12 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
-//Landing Page Route
-Route::get("/", function () {
-    return view("public.index");
-})->name('/');
+// //Landing Page Route
+// Route::get("/", function () {
+//     return view("public.index");
+// })->name('/');
 
+Route::get('/', [ServiceController::class, 'expiring'])->name('/');
 
 
 Route::get("/about", function () {

@@ -14,7 +14,9 @@
                 height: 100vh;
             }
 
+            .banner-area{
 
+            }
 
             .hero-section::before {
                 content: "";
